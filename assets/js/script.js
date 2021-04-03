@@ -25,11 +25,11 @@ function loadSchedule (){
     savedSchedule = JSON.parse(localStorage.getItem('schedule'));
 
     // to check if local storage is empty.
-   // if (savedSchedule === null){
-   //     return;
-   // }
+    if (savedSchedule === null){
+        return;
+    }
 
-    savedSchedule = [
+    /*savedSchedule = [
         {
             hour : 10 ,
             work : 'do homework'
@@ -42,7 +42,7 @@ function loadSchedule (){
         }
     
     
-    ]
+    ]*/
 
     if (savedSchedule.length > 0 ){
 
@@ -50,17 +50,23 @@ function loadSchedule (){
             
             var time = savedSchedule[index].hour;
             var task = savedSchedule[index].work;
+
             $('#'+time).children('textarea').text(task);
-            console.log($('#'+time).children('textarea'));
+            //console.log($('#'+time).children('textarea'));
         }
     }
 
 }
 
-function saveSchedule () {
+/*function saveSchedule (e) {
 
+    var hour = parseInt(e.parent().attr('id'));
+    var task =e.siblings('textarea').value();
 
-}
+    console.log(hour);
+    console.log(task);
+
+}*/
 
 function initPage (){
 
@@ -70,10 +76,10 @@ function initPage (){
     for(var i=6; i<22; i++) {
 
         var liEl = $('<li>');
-        //var formEl = $('<form>');
+       
         var labelEl = $('<label>');
         var txtareaEl = $('<textarea>');
-        //inputEl.attr('type', 'text');
+        
         var buttonEl = $('<button>');
 
         if (i<=12) {
@@ -82,11 +88,11 @@ function initPage (){
             labelEl.text((i-12)+'pm');
         }
 
-        //formEl.attr('class', 'row');
+       
         buttonEl.text('💾');
         buttonEl.attr('class','saveBtn');
         buttonEl.addClass('col-1')
-        //inputEl.attr('class','textarea');
+
         liEl.attr('class', 'row');
         liEl.attr('id', i);
         labelEl.attr('class', 'hour');
@@ -97,7 +103,6 @@ function initPage (){
         liEl.append(txtareaEl);
         liEl.append(buttonEl);
 
-        //liEl.append(formEl);
         ulEl.append(liEl);
     }
 
@@ -134,13 +139,77 @@ function start(){
     setInterval(clock, 1000);
 
 
-    $('textarea').on('click', function(){
+    /*$('textarea').on('click', function(){
         console.log('yes, text');
-    });
+    });*/
 
     $('.saveBtn').on('click', function(){
-        console.log('yes, button');
+
+        var time = parseInt($(this).parent().attr('id'));
+        var task =$(this).siblings('textarea').val();
+        console.log(task);
+
+        //var index = hour-6;
+
+        var entry = {
+            hour: time,
+            work : task
+        }
+
+        savedSchedule = JSON.parse(localStorage.getItem('schedule'));
+
+        if (savedSchedule === null){
+
+            savedSchedule =[entry];
+          
+            localStorage.setItem('schedule', JSON.stringify(savedSchedule));
+            
+        } else if(savedSchedule.length > 0){
+
+            var len = savedSchedule.length;
+
+            for (var i =0; i< len; i++){
+                
+                var savedHour = parseInt(savedSchedule[i].hour); 
+
+                if (savedHour === time) {
+
+                    savedSchedule[i] = entry;
+                    
+                    break;
+
+                } else if (savedHour > time) {
+                    
+                    savedSchedule.splice(i,0,entry);
+                   
+                    break ;
+
+                } else if(savedHour < time ) {
+                    
+                    if(i === (len-1)){
+
+                        savedSchedule.push(entry);
+                        break;
+                    }
+                    
+                }
+            }
+
+            localStorage.setItem('schedule', JSON.stringify(savedSchedule));
+        }
+
+    
+
     });
+    
+   /* $('.saveBtn').click(function(){
+        var hour = parseInt($(this).parent().attr('id'));
+        var task = $(this).siblings('textarea').text();
+
+        console.log(hour);
+        console.log(task);
+
+    })*/
 
 }
 
