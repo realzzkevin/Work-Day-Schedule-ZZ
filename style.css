@@ -69,3 +69,7 @@ textarea {
   font-size: 20px;
   transition: all 0.3s ease-in-out;
 }
+/* */
+.no-close .ui-dialog-titlebar-close{
+  display:none;
+}

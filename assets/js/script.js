@@ -63,13 +63,17 @@ function initPage (){
 
        
         buttonEl.text('💾');
-        buttonEl.attr('class','saveBtn');
-        buttonEl.addClass('col-1')
+        //buttonEl.attr('class','saveBtn');
+        buttonEl.addClass('saveBtn col-1');
+        //buttonEl.addClass('col-1')
 
-        liEl.attr('class', 'row');
+        //liEl.attr('class', 'row');
+        liEl.addClass('row');
         liEl.attr('id', i);
-        labelEl.attr('class', 'hour');
-        labelEl.addClass('col-1')
+
+        //labelEl.attr('class', 'hour');
+        labelEl.addClass('hour col-1');
+        //labelEl.addClass('col-1')
         txtareaEl.addClass('col-10');
 
         liEl.append(labelEl);
@@ -140,39 +144,37 @@ function refreshPage(){
 
 }
 
-function confirmSave (){
+function confirmSave (tarTxt){
     
      var divEl = $('<div>').attr('id','confirm');
      var message = $('<p>').text('Entry saved!');
 
      divEl.append(message);
-     console.log(divEl);
+     divEl.addClass("modal-dialog");
+     divEl.attr('role' , 'document');
+     message.addClass('modal-body');
 
      $('body').append(divEl);
-     $('#confirm').dialog({
+     $('#confirm').dialog( {
+
+        dialogClass : "no-close",
+        appendTo : 'body',
+        show: {effct: 'fade', duration: 200},
+        hide: {effct: 'fade', duration: 200},
+        position: {my:'center', at:'center', of:$(tarTxt)},
 
         open: function (event, ui) {
             
-            setTimeout(function(){
+                setTimeout(function(){
 
                 $('#confirm').dialog('close');
                 $('#confirm').remove();
 
-            }, 500);
+            }, 300);
         }
 
      });
 
-
-
-     /*setTimeout(function(){
-
-        $('#confirm').dialog('close');
-        $('body').remove('#confirm');
-
-     }, 300);*/
-
-     
 }
 
 function start(){
@@ -191,6 +193,7 @@ function start(){
 
         var time = parseInt($(this).parent().attr('id'));
         var task =$(this).siblings('textarea').val();
+        var tarTextArea = $(this).siblings('textarea');
         console.log(task);
 
         var entry = {
@@ -238,7 +241,7 @@ function start(){
             }
 
             localStorage.setItem('schedule', JSON.stringify(savedSchedule));
-            confirmSave();
+            confirmSave(tarTextArea);
         }    
 
     });
