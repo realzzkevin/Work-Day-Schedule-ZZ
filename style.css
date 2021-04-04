@@ -69,7 +69,16 @@ textarea {
   font-size: 20px;
   transition: all 0.3s ease-in-out;
 }
-/* */
+/* style the confirmation dialog: hide clos button */
 .no-close .ui-dialog-titlebar-close{
   display:none;
+}
+/* set size for the dialog message*/
+.ui-dialog-content {
+  background :#06aed5;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 25px;
+  padding: 5px;
 }
