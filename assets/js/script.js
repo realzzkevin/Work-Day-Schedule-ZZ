@@ -59,7 +59,7 @@ function initPage (){
         if (i<=12) {
             labelEl.text(i+' am');
         }else {
-            labelEl.text((i-12)+'pm');
+            labelEl.text((i-12)+' pm');
         }
 
        
