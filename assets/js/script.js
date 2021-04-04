@@ -140,6 +140,41 @@ function refreshPage(){
 
 }
 
+function confirmSave (){
+    
+     var divEl = $('<div>').attr('id','confirm');
+     var message = $('<p>').text('Entry saved!');
+
+     divEl.append(message);
+     console.log(divEl);
+
+     $('body').append(divEl);
+     $('#confirm').dialog({
+
+        open: function (event, ui) {
+            
+            setTimeout(function(){
+
+                $('#confirm').dialog('close');
+                $('#confirm').remove();
+
+            }, 500);
+        }
+
+     });
+
+
+
+     /*setTimeout(function(){
+
+        $('#confirm').dialog('close');
+        $('body').remove('#confirm');
+
+     }, 300);*/
+
+     
+}
+
 function start(){
 
     initPage();
@@ -203,6 +238,7 @@ function start(){
             }
 
             localStorage.setItem('schedule', JSON.stringify(savedSchedule));
+            confirmSave();
         }    
 
     });
