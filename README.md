@@ -4,9 +4,19 @@
 
 ## Features
 
-* Includes a simple clock
-* 
+* Extended Work hours, 6 am to 9pm :dizzy_face: .
+* save entries in local storage.
+* Includes a simple clock.
+* Past hour entries will be locked.
+* Display confirmation for successfully save entries.
+
+
 ## Credit
+* [jQuery](https://jquery.com/)
+
+* [jQueryui](https://jqueryui.com/)
+
+* [Bootstrap](https://getbootstrap.com/)
 
 ## Screenshots
 
