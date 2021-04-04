@@ -2,15 +2,16 @@
 
 ## Description
 
+A simple work Day scheduler application. It allows a user to plan their daily works, save events and tasks for each hour. The saved entries will be stored in local storage and will be loaded into the calendar automatically. The scheduler will update itself every hour without reloading the page.
+
 ## Features
 
-* Extended Work hours, 6 am to 9pm :dizzy_face: .
-* save entries in local storage.
+* Extended Work hours, 6 am to 9 pm :dizzy_face: .
 * Includes a simple clock.
+* Automatically updates scheduler every hour.
 * Past hour entries will be locked.
 * Display confirmation for successfully save entries.
-
-
+  
 ## Credit
 * [jQuery](https://jquery.com/)
 
