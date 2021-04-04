@@ -1,13 +1,8 @@
-var savedSchedule =[];
-var entries ={
-    hour:'',
-    work:''
-}
 
+var savedSchedule =[];
 
 var curDay = $('#currentDay');
 var today = moment();
-//var timeInterval;
 
 
 function displayCurrentDay(){
@@ -29,20 +24,7 @@ function loadSchedule (){
         return;
     }
 
-    /*savedSchedule = [
-        {
-            hour : 10 ,
-            work : 'do homework'
-        },
-    
-        {
-            hour : 20 ,
-    
-            work : 'do more home work'
-        }
-    
-    
-    ]*/
+
 
     if (savedSchedule.length > 0 ){
 
@@ -52,21 +34,12 @@ function loadSchedule (){
             var task = savedSchedule[index].work;
 
             $('#'+time).children('textarea').text(task);
-            //console.log($('#'+time).children('textarea'));
+       
         }
     }
 
 }
 
-/*function saveSchedule (e) {
-
-    var hour = parseInt(e.parent().attr('id'));
-    var task =e.siblings('textarea').value();
-
-    console.log(hour);
-    console.log(task);
-
-}*/
 
 function initPage (){
 
@@ -117,7 +90,7 @@ function initPage (){
         if(i < now){
             $(this).children('textarea').addClass('past');
             $(this).children('textarea').attr('disabled', true);
-            //$(this).children('textarea').text('Who controls the past?');
+
         }else if(i === now){
             $(this).children('textarea').addClass('present');
         }else  {
@@ -129,6 +102,44 @@ function initPage (){
     loadSchedule();
 }
 
+function refreshPage(){
+
+    var toNexthour = Math.abs(parseInt(moment().diff(moment().endOf('hour'), 'seconds')))+1;
+    console.log(toNexthour+' seconds to next hour');
+    
+    setTimeout( function refresh () {
+
+        $('textarea').removeClass('past');
+        $('textarea').removeClass('present');
+        $('textarea').removeClass('future');
+
+        var now = parseInt( moment().format('HH'));
+        console.log('curren hour is'+ now);
+
+        $('li').each(function(){
+            
+            var i = parseInt($(this).attr('id') );
+    
+            
+            if(i < now){
+                $(this).children('textarea').addClass('past');
+                $(this).children('textarea').attr('disabled', true);
+    
+            }else if(i === now){
+                $(this).children('textarea').addClass('present');
+            }else  {
+                $(this).children('textarea').addClass('future');
+            }
+            
+        });
+
+        console.log('refresh has run');
+        setTimeout (refresh, 3600000);
+
+    }, toNexthour*1000);
+
+}
+
 function start(){
 
     initPage();
@@ -138,18 +149,14 @@ function start(){
     clock();
     setInterval(clock, 1000);
 
+    refreshPage();
 
-    /*$('textarea').on('click', function(){
-        console.log('yes, text');
-    });*/
 
-    $('.saveBtn').on('click', function(){
+    $('.saveBtn').on('click', function saveEntry(){
 
         var time = parseInt($(this).parent().attr('id'));
         var task =$(this).siblings('textarea').val();
         console.log(task);
-
-        //var index = hour-6;
 
         var entry = {
             hour: time,
@@ -196,21 +203,11 @@ function start(){
             }
 
             localStorage.setItem('schedule', JSON.stringify(savedSchedule));
-        }
-
-    
+        }    
 
     });
+
     
-   /* $('.saveBtn').click(function(){
-        var hour = parseInt($(this).parent().attr('id'));
-        var task = $(this).siblings('textarea').text();
-
-        console.log(hour);
-        console.log(task);
-
-    })*/
-
 }
 
-start()
+start();
