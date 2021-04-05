@@ -61,11 +61,9 @@ function initPage (){
         }else {
             labelEl.text((i-12)+' pm');
         }
-
-       
-        buttonEl.text('💾');
-        buttonEl.addClass('saveBtn col-1');
-
+        //use bootstrap and font awesome style css
+        buttonEl.addClass('saveBtn col-1 fas fa-save');
+ 
         liEl.addClass('row');
         liEl.attr('id', i);
 
